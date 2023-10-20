@@ -47,7 +47,7 @@ router.post(
     );
 
     // Store JWT on seesion
-    req.session = { ...req.session, jwt: userJwt };
+    req.session = { jwt: userJwt };
 
     res.status(200).send(existingUser);
   }

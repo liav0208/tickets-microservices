@@ -15,6 +15,11 @@ spec:
       containers:
         - name: client
           image: liav19960208/client
+          resources:
+            limits:
+              memory: "256Mi" # Set the memory limit to 256Mi (Megabytes)
+            requests:
+              memory: "128Mi" # Set the memory request to 128Mi (Megabytes)
 ---
 apiVersion: v1
 kind: Service

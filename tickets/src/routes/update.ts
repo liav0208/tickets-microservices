@@ -5,9 +5,10 @@ import {
   NotFoundError,
   requireAuth,
   NotAuthorizedError,
+  BadRequestError,
 } from "@liavtickets/common";
 
-import { TicketUpdatedPublisher } from "../events/publishers/ticket-updated-publisher copy";
+import { TicketUpdatedPublisher } from "../events/publishers/ticket-updated-publisher";
 import { Ticket } from "../models/ticket";
 import { natsWrapper } from "../nats-wrapper";
 
@@ -34,6 +35,10 @@ router.put(
       throw new NotAuthorizedError();
     }
 
+    if (ticket.orderId) {
+      throw new BadRequestError("Cannot edit a reserved ticket");
+    }
+
     const { title, price } = req.body;
     ticket.set({
       title,
@@ -47,6 +52,7 @@ router.put(
       title: ticket.title,
       price: ticket.price,
       userId: ticket.userId,
+      version: ticket.version,
     });
 
     res.send(ticket);

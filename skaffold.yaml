@@ -33,6 +33,14 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
+    - image: liav19960208/expiration
+      context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
     - image: liav19960208/tickets
       context: tickets
       docker:
